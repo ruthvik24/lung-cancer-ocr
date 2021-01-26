@@ -1,0 +1,114 @@
+{% load static %}
+{% static "images" as baseUrl %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href=https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/predict.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <!--
+    <h1><strong>Lung</strong> cancer report</h1>
+    <h4><strong>Name: {{res}}</strong></h4>
+    
+    <img src="{{baseUrl}}/{{image}}" />
+    -->
+    <div class="container">
+        <div class="container-top">
+            <div class="left">
+                <h2>Lung cancer report</h2>
+                <p>From here you can download your report !!</p>
+            </div>
+            <div class="right">
+                <button id="createNew">Click here !</button>
+            </div>
+        </div>
+        <div class="container-body">
+            <table id="table">
+                <tr>
+                  <th>Name</th>
+                  <th>Age</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                </tr>
+                <tr>
+                  <td>{{name}}</td>
+                  <td>{{age}}</td>
+                  <td>19-01-2021</td>
+                  <td>{{res}}</td>
+                </tr>
+                
+              </table>
+        </div>
+    </div>
+
+    <div class="modal" id="modal">
+        <div class="modal-container">
+            <form id="form" class="form">
+                <h2>Check Details</h2>
+                <div class="form-control">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" value={{name}} autocomplete="off" required>
+                </div>
+                <div class="form-control">
+                    <label for="domain">Email</label>
+                    <input type="email" id="domain" value={{email}} autocomplete="off" required>
+                </div>
+                <div class="form-control">
+                    <label for="status">Contact number</label>
+                    <input type="text" id="status" placeholder="Please enter your mobile no...." autocomplete="off" required>
+                </div>
+              <div id="container1" style="width:600px">
+                <button type="submit">Download Report</button>
+              <button type="submit">Email Me !!</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        /* The design was inspired by https://uidesigndaily.com/posts/sketch-table-list-day-1262 */
+
+        const createNew = document.getElementById('createNew');
+        const table = document.getElementById('table');
+        const modal = document.getElementById('modal');
+        const form = document.getElementById('form');
+
+        createNew.addEventListener('click', () => {
+            modal.style.display = 'block';
+            form.addEventListener('submit', openModal);
+        });
+
+        // Open Modal
+        const openModal = (e) => {
+            e.preventDefault();
+
+            const tr = document.createElement('tr');
+
+            const name = document.getElementById('name').value.trim();
+            const domain = document.getElementById('domain').value.trim();
+            const status = document.getElementById('status').value.trim();
+
+            tr.innerHTML = `
+                    <td>${name}</td>
+                    <td>${domain} domains</td>
+                    <td>${status}</td>  
+                `;
+
+            table.appendChild(tr);
+        }
+
+        // Close Modal
+        window.addEventListener('click', e => {
+            if(e.target === modal){
+                modal.style.display = 'none';
+            }
+        })
+    </script>
+
+</body>
+</html>
